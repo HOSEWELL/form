@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import React, { useState }  from "react";
+import { userFormSchema } from "../schema";
 const UserForm=()=>{
 const onSubmit = () => {
       setTimeout(() => {
@@ -8,17 +9,18 @@ const onSubmit = () => {
       }, 3000); 
     }
    
-    const {values, handleChange, handleBlur, handleSubmit, isSubmitting} = useFormik({
+    const {errors, values, handleChange, handleBlur, handleSubmit, isSubmitting, touched} = useFormik({
         initialValues: {
             email: "",
             age: "",
             password: "",
             confirmPassword: "",
         },
+        validateionSchema: userFormSchema,
         onSubmit
     })
 
-
+console.log(errors);
 
     return(
         <>
@@ -34,7 +36,10 @@ const onSubmit = () => {
                             onChange={handleChange}
                             value={values.email}
                             onBlur={handleBlur}
-                            placeholder="Email" />
+                            placeholder="Email" 
+                            style = {errors.email && touched.email ? {borderColor: "rgb(255, 84, 84)"} :{}}
+                            />
+                            {errors.email && touched.email? <p style={{color:"rgb(255, 84, 84)"}}>{errors.email}</p> :''}
                     </div>
                     <div className="form-group" style={{padding:"10px"}}>
                         <label for="age">Age</label>
@@ -46,7 +51,10 @@ const onSubmit = () => {
                             value={values.age}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            placeholder="Age" />
+                            placeholder="Age" 
+                            style = {errors.age && touched.age? {borderColor: "rgb(255, 84, 84)"} :{}}
+                            />
+                            {errors.age && touched.age? <p style={{color:"rgb(255, 84, 84)"}}>{errors.age}</p> :''}
                     </div>
                     <div className="form-group" style={{padding:"10px"}}>
                         <label for="password">Password</label>
@@ -58,7 +66,10 @@ const onSubmit = () => {
                             value={values.password}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            placeholder="Password" />
+                            placeholder="Password" 
+                            style = {errors.password && touched.password ? {borderColor: "rgb(255, 84, 84)"} :{}}
+                            />
+                            {errors.password && touched.password? <p style={{color:"rgb(255, 84, 84)"}}>{errors.password}</p> :''}
                     </div>
                     <div className="form-group" style={{padding:"10px"}}>
                         <label for="confirmPassowrd">Confirm Password</label>
@@ -70,7 +81,10 @@ const onSubmit = () => {
                             onChange={handleChange}
                             onBlur={handleBlur}
                             id="confirmPassword"
-                            placeholder="Confirm Password" />
+                            placeholder="Confirm Password" 
+                            style = {errors.confirmPassword && touched.confirmPassword? {borderColor: "rgb(255, 84, 84)"} :{}}
+                            />
+                            {errors.confirmPassword && touched.firstname? <p style={{color:"rgb(255, 84, 84)"}}>{errors.firstname}</p> :''}
                     </div>
                     <br/>
                     <button disabled={isSubmitting} type="submit" className="btn btn-info">Submit</button>
